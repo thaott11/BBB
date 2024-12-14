@@ -1,77 +1,116 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Test_Project_interface</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Test_Project_interface.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - Test_Project_interface</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/Test_Project_interface.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container">
-                <img src="./uploads/logo.jpg" style="max-width:120px"/>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-5">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Trang chủ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Giới thiêu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Liên hệ</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Sản Phẩm
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Tin tức</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex" role="search" >
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                    <div class="dropdown" >
-                        <button class="btn btn-link dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle" style="font-size: 24px;"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#">Login</a></li>
-                            <li><a class="dropdown-item" href="#">Sign Up</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+	<header>
+		<nav class="navbar navbar-expand-lg bg-body-tertiary">
+			<div class="container">
+				<img src="./uploads/logo.jpg" style="max-width:120px" />
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-5">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#">Trang chủ</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#">Giới thiêu</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#">Liên hệ</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								Sản Phẩm
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Action</a></li>
+								<li><a class="dropdown-item" href="#">Another action</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#">Something else here</a></li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Tin tức</a>
+						</li>
+					</ul>
+					<form class="d-flex" role="search">
+						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Search</button>
+					</form>
+					<a class="mb-0 fs-4 ms-5 me-2position-relative">
+						<i class="bi bi-cart4"></i>
+					</a>
+				</div>
+			</div>
+			<div class="dropdown ">
+				<button class="btn btn-link dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+					<i class="bi bi-person-circle" style="font-size: 24px;"></i>
+				</button>
+				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+					<li><a class="dropdown-item" href="#">Login</a></li>
+					<li><a class="dropdown-item" href="#">Sign Up</a></li>
+					<hr></hr>
+					<li><a class="dropdown-item" href="#">Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
+	<footer class="border-top footer text-muted" style="background-color:darkslategray" >
+		<div class="container">
+			<div class="row text-white" style="">
+				<div class="col-lg-3 col-md-8 mb-4">
+					<div class="footer-logo" style="padding-left:120px; font-size:19px; font-weight:bold">HOTLINE: 028.33.444.555</div>
+				</div>
+				<div class="col-lg-3 col-md-5 mb-4">
+					<h5 class="ms-3">Chính sách chung</h5>
+					<ul class="" >
+						<li><a  href="#">Chính sách vận chuyển</a></li>
+						<li><a href="#">Chính sách bảo hành</a></li>
+						<li><a href="#">Chính sách đổi trả và hoàn tiền</a></li>
+						<li><a href="#">Chính sách cho doanh nghiệp</a></li>
+						<li><a href="#">Chính sách hàng chính hãng</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-3 col-md-5 mb-4">
+					<h5 class="ms-3">Hướng dẫn dịch vụ</h5>
+					<ul class=""> @* list-unstyled mất dấu . *@
+						<li><a href="#">Phương thức thanh toán</a></li>
+						<li><a href="#">Hướng dẫn mua hàng</a></li>
+						<li><a href="#">Gửi yêu cầu bảo hành</a></li>
+						<li><a href="#">Hướng dẫn mua hàng trả góp</a></li>
+						<li><a href="#">Góp ý, Khiếu Nại</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-3 col-md-5 mb-4 ">
+					<div class="col-md-4 text-md-end" style="padding-right:200px">
+						<div class="payment-icons d-flex">
+							<img src="https://img.icons8.com/color/48/visa.png" alt="Visa">
+							<img src="https://img.icons8.com/color/48/mastercard.png" alt="Mastercard">
+							<img src="https://img.icons8.com/color/48/paypal.png" alt="Paypal">
+							<img src="https://www.icreatemagazine.nl/app/uploads/2023/08/ApplePay.png" style="max-width:50px" alt="Apple Pay">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
