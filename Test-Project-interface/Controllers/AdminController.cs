@@ -13,5 +13,9 @@ namespace Test_Project_interface.Controllers
         {
             return View();
         }
+        public IActionResult Product()
+        {
+            return View();
+        }
     }
 }
