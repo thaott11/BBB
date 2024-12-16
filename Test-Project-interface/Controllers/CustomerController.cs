@@ -7,6 +7,10 @@ namespace Test_Project_interface.Controllers
         public IActionResult Index()
         {
             return View();
+        } 
+        public IActionResult Lienhe()
+        {
+            return View();
         }
     }
 }
