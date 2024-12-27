@@ -1,0 +1,20 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Grids
+@inject NavigationManager NavigateManager
+@using Syncfusion.Blazor.Buttons
+
+<SfAppBar  ColorMode="AppBarColor.Primary">
+	<SfButton CssClass="e-inherit" IconCss="e-icons e-Home" Content="Home" OnClick="@(() => NavigateToPage("Home"))"></SfButton>
+	<SfButton CssClass="e-inherit" IconCss="e-icons e-Note" Content="Note" OnClick="@(() => NavigateToPage("Note"))"></SfButton>
+	<SfButton CssClass="e-inherit" IconCss="e-icons e-ContactWeb" Content="ContactWeb" OnClick="@(() => NavigateToPage("ContactWeb"))"></SfButton>
+</SfAppBar>
+
+@code{
+	public void NavigateToPage(string page){
+		NavigateManager.NavigateTo(page);
+	}
+}
+
+
+
+

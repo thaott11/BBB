@@ -1,0 +1,31 @@
+﻿@page "/Input"
+
+<EditForm Model="@_annotation" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <div class="example-content">
+            <InputText @bind-Value="@_annotation.TableName" placeholder="Enter table name"></InputText>
+            <ValidationMessage For="@(() => _annotation.TableName)" />
+        </div>
+    </div>
+    <div class="submit-btn">
+        <Button type="submit" class="btn btn-success" IsPrimary="true">Submit</Button>
+    </div>
+</EditForm>
+
+@code {
+    private AnnotationModel _annotation = new AnnotationModel();
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    private void OnValidSubmit()
+    {
+        NavigationManager.NavigateTo($"ListEmployess");
+    }
+
+    public class AnnotationModel
+    {
+        public string TableName { get; set; }
+    }
+}

@@ -1,0 +1,30 @@
+﻿@page "/Employess/Gritdata"
+@using WEB_APP.Models
+@using WEB_APP.Service
+@inject ICompanyService Companyservice
+
+<h3>Gritdata</h3>
+
+<div class="col-lg-12 control-section">
+    <div class="content-wrapper">
+        <div class="row">
+            <SfGrid DataSource="@GridData" Toolbar="@(new List<string>() { "Edit", "Delete", "Update", "Cancel" })" AllowPaging="true">
+                <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" ShowAddNewRow="true"></GridEditSettings>
+                <GridColumns>
+                    <GridColumn Field=@nameof(company.Id) HeaderText="Order ID" IsPrimaryKey="true" ValidationRules="@(new ValidationRules{ Required=true })" TextAlign="TextAlign.Right" Width="140"></GridColumn>
+                    <GridColumn Field=@nameof(company.Name) HeaderText="Customer ID" ValidationRules="@(new ValidationRules{ Required=true })" Width="160"></GridColumn>
+                    <GridColumn Field=@nameof(company.Address) HeaderText="Order Date" ValidationRules="@(new ValidationRules{ Required=true })" Width="140"></GridColumn>
+                </GridColumns>
+            </SfGrid>
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<company> GridData { get; set; } = new List<company>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        GridData = await Companyservice.GetData();
+    }
+}

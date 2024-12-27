@@ -1,0 +1,85 @@
+﻿@page "/Employess/Index"
+@using System.Text.Json
+@using WEB_APP.ModelReques
+@using WEB_APP.Service
+@using WEB_APP.Models
+@inject IEmployessService employessService
+
+<h3>Employee Management</h3>
+
+<div class="col-lg-12 control-section">
+    <div class="content-wrapper">
+        <div class="row">
+            <SfGrid DataSource="@GridData" @ref="GridRef" Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })" AllowPaging="true" AllowFiltering="true">
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridPageSettings PageCount="5"></GridPageSettings>
+                <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" ShowDeleteConfirmDialog="true" Mode="EditMode.Dialog"></GridEditSettings>
+                <GridEvents TValue="Employess" OnActionBegin="OnActionBeginGrid"></GridEvents>
+                <GridColumns>
+                    <GridColumn Field=@nameof(Employess.Id) HeaderText="ID" IsPrimaryKey="true" Visible="false" ValidationRules="@(new ValidationRules{ Required=true })" TextAlign="TextAlign.Right" Width="140"></GridColumn>
+                    <GridColumn Field=@nameof(Employess.NameEmploy) HeaderText="Name" ValidationRules="@(new ValidationRules{ Required=true })" Width="150"></GridColumn>
+                    <GridColumn Field=@nameof(Employess.Age) HeaderText="Age" ValidationRules="@(new ValidationRules{ Required=true, Number=true })" TextAlign="TextAlign.Right" Width="100"></GridColumn>
+                    <GridColumn Field=@nameof(Employess.Address) HeaderText="Address" ValidationRules="@(new ValidationRules{ Required=true })" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Employess.Phone) HeaderText="Phone" ValidationRules="@(new ValidationRules{ Required=true })" Width="150"></GridColumn>
+                </GridColumns>
+            </SfGrid>
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<Employess> GridData { get; set; } = new List<Employess>();
+    private SfGrid<Employess> GridRef;
+
+    protected override async Task OnInitializedAsync()
+    {
+        GridData = await employessService.Getdata();
+    }
+
+    public async Task OnActionBeginGrid(ActionEventArgs<Employess> args)
+    {
+        if (args.Action == "Delete")
+        {
+            var DataDelete = args.Data.Id;
+            if (DataDelete != null)
+            {
+                await employessService.DeleteEmployess(DataDelete);
+            }
+        }
+        else if (args.Action == Syncfusion.Blazor.Grids.Action.Add.ToString())
+        {
+            var jsonData = JsonSerializer.Serialize(args.Data);
+            var request = new CreateData()
+                {
+                    EntityType = "Employess",
+                    JsonData = jsonData
+                };
+            var result = await employessService.CreateData(request);
+            if (result  != null)
+            {
+                GridData = await employessService.Getdata();
+                await GridRef.Refresh();
+            }
+        }
+
+        else if (args.Action == "Edit")
+        {
+            var jsonData = JsonSerializer.Serialize(args.Data);
+            var request = new CreateData()
+                {
+                    EntityType = "Employess",
+                    JsonData = jsonData
+                };
+            var result = await employessService.UpdateEmployess(request);
+            if (result != null)
+            {
+                await GridRef.Refresh();
+            }
+            else
+            {
+            }
+        }
+
+
+    }
+}

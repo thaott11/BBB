@@ -1,0 +1,6 @@
+@Data_Select_HostAddress = http://localhost:5224
+
+GET {{Data_Select_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

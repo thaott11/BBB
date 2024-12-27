@@ -1,0 +1,152 @@
+﻿@page "/ContactWeb"
+@using Blazor_Web_App.Models
+@using Blazor_Web_App.Service
+@inject IContactService ContactSv
+
+<div class="col-lg-12 control-section">
+	<SfTextBox @bind-Value="SearchValue" Placeholder="Search" Width="200px"></SfTextBox>
+	<SfButton Content="Search" OnClick="SearchContact"></SfButton>
+	<div class="content-wrapper">
+		<div class="row">
+			<SfGrid DataSource="@GridData" @ref="GridRef" Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })" AllowPaging="true" AllowFiltering="true">
+				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+				<GridPageSettings PageCount="5"></GridPageSettings>
+				<GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" ShowDeleteConfirmDialog="true" Mode="EditMode.Dialog"></GridEditSettings>
+				<GridEvents TValue="Contact" OnActionBegin="OnActionBeginGrid"></GridEvents>
+				<GridColumns>
+					<GridColumn Field=@nameof(Contact.Id) HeaderText="ID" IsPrimaryKey="true" ValidationRules="@(new ValidationRules{ Required=true, Number=true})" TextAlign="TextAlign.Right" Width="140"></GridColumn>
+					<GridColumn Field=@nameof(Contact.Firstname) ValidationRules="@(new ValidationRules{ Required=true})" Width="150"></GridColumn>
+					<GridColumn Field=@nameof(Contact.Lastname) ValidationRules="@(new ValidationRules{ Required=true})" Width="200"></GridColumn>
+					<GridColumn Field=@nameof(Contact.Nickname) ValidationRules="@(new ValidationRules{ Required=true})" Width="200"></GridColumn>
+					<GridColumn Field=@nameof(Contact.plane) ValidationRules="@(new ValidationRules{ Required=true})" Width="200"></GridColumn>
+					<GridColumn Field=@nameof(Contact.Isdeleted) ValidationRules="@(new ValidationRules{ Required=true})" Width="200"></GridColumn>
+					<GridColumn Field=@nameof(Contact.DateOfBird) ValidationRules="@(new ValidationRules{ Required=true})" Width="200"></GridColumn>
+					<GridColumn Field=@nameof(Contact.DateCreate) ValidationRules="@(new ValidationRules{ Required=true})" Width="200"></GridColumn>
+				</GridColumns>
+			</SfGrid>
+		</div>
+	</div>
+</div>
+
+<div class="col-lg-12 control-section toast-default-section">
+	<SfToast ID="toast_default" @ref="ToastObj" Title="Thông báo" Content="@ToastContent" Timeout="5000" Icon="e-meeting">
+		<ToastPosition X="@ToastPosition"></ToastPosition>
+	</SfToast>
+
+</div>
+<style>
+	#toast_default .e-meeting::before {
+		content: "\e705";
+		font-size: 17px;
+	}
+
+	.bootstrap4 #toast_default .e-meeting::before {
+		content: "\e763";
+		font-size: 20px;
+	}
+</style>
+@code {
+	SfTextBox TextBox;
+	SfToast ToastObj;
+	private string ToastPosition = "Right";
+	private string ToastContent = "";
+	private string? SearchValue;
+	private Contact? SearchResult;
+	private async Task ShowOnClick()
+	{
+		await this.ToastObj.ShowAsync();
+	}
+	private async Task HideOnClick()
+	{
+		await this.ToastObj.HideAsync("All");
+	}
+}
+
+@code {
+	public List<Contact> GridData { get; set; }
+	private List<Contact> Employess;
+	SfGrid<Contact> GridRef;
+	private Contact contact = new Contact();
+	protected override async Task OnInitializedAsync()
+	{
+		var contacts = await ContactSv.GetAllRecords();
+		GridData = contacts.ToList();
+	}
+
+	private async Task SearchContact()
+	{
+		if (int.TryParse(SearchValue, out var id))
+		{
+			var result = await ContactSv.GetById(id);
+			if (result != null)
+			{
+				SearchResult = result;
+			}
+			else
+			{
+				SearchResult = null;
+			}
+		}
+		else
+		{
+			Console.WriteLine("Invalid ID format. Please enter a valid number.");
+		}
+	}
+
+
+	public async Task OnActionBeginGrid(ActionEventArgs<Contact> args)
+	{
+		try
+		{
+			if (args.Action == "Edit")
+			{
+				var dataEdit = args.Data;
+				var result = await ContactSv.UpdateContact(dataEdit);
+				if (result != null)
+				{
+					ToastContent = "Cập nhật thành công!";
+					await GridRef.Refresh();
+				}
+				else
+				{
+					ToastContent = "Cập nhật thất bại!";
+				}
+				await ToastObj.ShowAsync();
+			}
+			else if (args.Action == "Add")
+			{
+				var result = await ContactSv.CreateContact(args.Data);
+				if (result != null)
+				{
+					ToastContent = "Thêm mới thành công!";
+					await GridRef.Refresh();
+				}
+				else
+				{
+					ToastContent = "Thêm mới thất bại!";
+				}
+				await ToastObj.ShowAsync();
+			}
+			else if (args.Action == "Delete")
+			{
+				var result = await ContactSv.DeleteContact(args.Data.Id);
+				if (result)
+				{
+					ToastContent = "Xóa thành công!";
+					await GridRef.Refresh();
+				}
+				else
+				{
+					ToastContent = "Xóa thất bại!";
+					args.Cancel = true;
+				}
+				await ToastObj.ShowAsync();
+			}
+		}
+		catch (Exception ex)
+		{
+			ToastContent = $"Lỗi: {ex.Message}";
+			await ToastObj.ShowAsync();
+		}
+	}
+}

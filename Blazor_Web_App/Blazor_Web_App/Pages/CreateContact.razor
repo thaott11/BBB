@@ -1,0 +1,31 @@
+﻿@page "/CreateContact"
+@inject NavigationManager NavigationManager
+@using Blazor_Web_App.Models
+@using Blazor_Web_App.Service
+
+@inject IContactService ContactService
+<h3>CreateContact</h3>
+
+<EditForm Model="contact" OnValidSubmit="Createcontact">
+	<SfTextBox CssClass="e-outline" Placeholder="Fist Name" FloatLabelType="FloatLabelType.Auto" @bind-Value="contact.Firstname"></SfTextBox>
+
+	<SfTextBox CssClass="e-outline" Placeholder="Last Name" FloatLabelType="FloatLabelType.Auto" @bind-Value="contact.Lastname"></SfTextBox>
+
+	<SfTextBox CssClass="e-outline" Placeholder="Nick Name" FloatLabelType="FloatLabelType.Auto" @bind-Value="contact.Nickname"></SfTextBox>
+
+	<SfTextBox CssClass="e-outline" Placeholder="plane" FloatLabelType="FloatLabelType.Auto" @bind-Value="contact.plane"></SfTextBox>
+
+	<SfDatePicker Placeholder="DateOfBird" FloatLabelType="FloatLabelType.Auto" @bind-Value="contact.DateOfBird" Format="dd/MM/yyyy" />
+	<SfDatePicker Placeholder="DateCreate" FloatLabelType="FloatLabelType.Auto" @bind-Value="contact.DateCreate" Format="dd/MM/yyyy" />
+
+	<SfButton CssClass="e-primary" IconCss="e-icons e-save" Content="Save" type="submit" />
+</EditForm>
+
+@code {
+	private Contact contact = new Contact();
+
+	private async Task Createcontact(){
+
+		var create = await ContactService.CreateContact(contact);
+    }
+}

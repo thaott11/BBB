@@ -18,5 +18,10 @@ namespace Test_Project_interface.Controllers
         {
             return View();
         }
+
+        public IActionResult RecoverPass()
+        {
+            return View();
+        }
     }
 }

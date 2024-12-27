@@ -1,0 +1,20 @@
+﻿@page "/Note"
+@using Blazor_Web_App.Service
+@inject INoteService NoteService
+<div class="col-lg-12 control-section">
+    <div class="content-wrapper">
+        <div class="row">
+            <SfGrid TValue="Note" DataSource="@notes" AllowPaging="true" AllowFiltering="true" Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+                <GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true"></GridEditSettings>
+               
+            </SfGrid>
+        </div>
+    </div>
+</div>
+@code {
+    public List<Note> notes { get; set; }
+    protected  override async Task OnInitializedAsync()
+    {
+        notes = await NoteService.GetAllNote();
+    }
+}
